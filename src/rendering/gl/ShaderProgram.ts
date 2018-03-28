@@ -29,11 +29,19 @@ class ShaderProgram {
 
   unifModel: WebGLUniformLocation;
   unifModelInvTr: WebGLUniformLocation;
+  unifViewProjInvTr: WebGLUniformLocation;
   unifViewProj: WebGLUniformLocation;
   unifView: WebGLUniformLocation;
   unifProj: WebGLUniformLocation;
   unifColor: WebGLUniformLocation;
   unifTime: WebGLUniformLocation;
+  unifCampos: WebGLUniformLocation;
+  unifRadius: WebGLUniformLocation;
+  unifWidth: WebGLUniformLocation;
+  unifHeight: WebGLUniformLocation;
+
+  unifNear: WebGLUniformLocation;
+  unifFar: WebGLUniformLocation;
 
   unifTexUnits: Map<string, WebGLUniformLocation>;
 
@@ -55,10 +63,17 @@ class ShaderProgram {
     this.unifModel = gl.getUniformLocation(this.prog, "u_Model");
     this.unifModelInvTr = gl.getUniformLocation(this.prog, "u_ModelInvTr");
     this.unifViewProj = gl.getUniformLocation(this.prog, "u_ViewProj");
+    this.unifViewProjInvTr = gl.getUniformLocation(this.prog, "u_ViewProjInvTr");
     this.unifView = gl.getUniformLocation(this.prog, "u_View");
     this.unifProj = gl.getUniformLocation(this.prog, "u_Proj");
     this.unifColor = gl.getUniformLocation(this.prog, "u_Color");
-    this.unifTime = gl.getUniformLocation(this.prog, "u_Time")
+    this.unifTime = gl.getUniformLocation(this.prog, "u_Time");
+    this.unifCampos = gl.getUniformLocation(this.prog, "u_CamPos");
+    this.unifRadius = gl.getUniformLocation(this.prog, "u_Radius");
+    this.unifWidth = gl.getUniformLocation(this.prog, "u_Width");
+    this.unifHeight = gl.getUniformLocation(this.prog, "u_Height");
+    this.unifNear = gl.getUniformLocation(this.prog, "u_Near");
+    this.unifFar = gl.getUniformLocation(this.prog, "u_Far");
 
     this.unifTexUnits = new Map<string, WebGLUniformLocation>();
   }
@@ -113,6 +128,14 @@ class ShaderProgram {
     if (this.unifViewProj !== -1) {
       gl.uniformMatrix4fv(this.unifViewProj, false, vp);
     }
+
+    if (this.unifViewProjInvTr !== -1) {
+      let vpi: mat4 = mat4.create();
+      mat4.transpose(vpi, vp);
+      mat4.invert(vpi, vpi);
+      gl.uniformMatrix4fv(this.unifViewProjInvTr, false, vpi);
+    }
+
   }
 
   setViewMatrix(vp: mat4) {
@@ -140,6 +163,48 @@ class ShaderProgram {
     this.use();
     if (this.unifTime !== -1) {
       gl.uniform1f(this.unifTime, t);
+    }
+  }
+
+  setCamerapos(campos: vec4) {
+    this.use();
+    if (this.unifCampos !== -1) {
+      gl.uniform4fv(this.unifCampos, campos);
+    }
+  }
+
+  setRadius(t: number) {
+    this.use();
+    if (this.unifRadius !== -1) {
+      gl.uniform1f(this.unifRadius, t);
+    }
+  }
+
+  setWidth(t: number) {
+    this.use();
+    if (this.unifWidth !== -1) {
+      gl.uniform1f(this.unifWidth, t);
+    }
+  }
+
+  setHeight(t: number) {
+    this.use();
+    if (this.unifHeight !== -1) {
+      gl.uniform1f(this.unifHeight, t);
+    }
+  }
+
+  setNear(t: number) {
+    this.use();
+    if (this.unifNear !== -1) {
+      gl.uniform1f(this.unifNear, t);
+    }
+  }
+
+  setFar(t: number) {
+    this.use();
+    if (this.unifFar !== -1) {
+      gl.uniform1f(this.unifFar, t);
     }
   }
 

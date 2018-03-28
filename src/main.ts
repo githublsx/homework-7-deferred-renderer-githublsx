@@ -1,4 +1,4 @@
-import {vec3} from 'gl-matrix';
+import {vec3, vec4} from 'gl-matrix';
 import * as Stats from 'stats-js';
 import * as DAT from 'dat-gui';
 import Square from './geometry/Square';
@@ -11,9 +11,13 @@ import ShaderProgram, {Shader} from './rendering/gl/ShaderProgram';
 import Texture from './rendering/gl/Texture';
 
 // Define an object with application parameters and button callbacks
-// const controls = {
-//   // Extra credit: Add interactivity
-// };
+const controls = {
+  // Extra credit: Add interactivity
+  DOF: false,
+  Bloom: false,
+  Kuwahara: false,
+  Rain: false,
+};
 
 let square: Square;
 
@@ -67,7 +71,11 @@ function main() {
   document.body.appendChild(stats.domElement);
 
   // Add controls to the gui
-  // const gui = new DAT.GUI();
+  const gui = new DAT.GUI();
+  gui.add(controls, 'DOF');
+  gui.add(controls, 'Bloom');
+  gui.add(controls, 'Kuwahara');
+  gui.add(controls, 'Rain');
 
   // get canvas and webgl context
   const canvas = <HTMLCanvasElement> document.getElementById('canvas');
@@ -84,7 +92,7 @@ function main() {
 
   const camera = new Camera(vec3.fromValues(0, 9, 25), vec3.fromValues(0, 9, 0));
 
-  const renderer = new OpenGLRenderer(canvas);
+  const renderer = new OpenGLRenderer(canvas, controls);
   renderer.setClearColor(0, 0, 0, 1);
   gl.enable(gl.DEPTH_TEST);
 
@@ -94,6 +102,8 @@ function main() {
     ]);
 
   standardDeferred.setupTexUnits(["tex_Color"]);
+  standardDeferred.setFar(camera.far);
+  standardDeferred.setNear(camera.near);
 
   function tick() {
     camera.update();
@@ -101,20 +111,26 @@ function main() {
     gl.viewport(0, 0, window.innerWidth, window.innerHeight);
     timer.updateTime();
     renderer.updateTime(timer.deltaTime, timer.currentTime);
+    renderer.controls = controls;
+    
 
     standardDeferred.bindTexToUnit("tex_Color", tex0, 0);
+    
+
 
     renderer.clear();
     renderer.clearGB();
-
     // TODO: pass any arguments you may need for shader passes
+    renderer.deferredShader.setCamerapos(vec4.fromValues(camera.controls.eye[0], camera.controls.eye[1], camera.controls.eye[2], 1.0));
+    renderer.deferredShader.setHeight(window.innerHeight);
+    renderer.deferredShader.setWidth(window.innerWidth);
     // forward render mesh info into gbuffers
     renderer.renderToGBuffer(camera, standardDeferred, [mesh0]);
     // render from gbuffers into 32-bit color buffer
     renderer.renderFromGBuffer(camera);
-    // apply 32-bit post and tonemap from 32-bit color to 8-bit color
-    renderer.renderPostProcessHDR();
-    // apply 8-bit post and draw
+    //apply 32-bit post and tonemap from 32-bit color to 8-bit color
+    renderer.renderPostProcessHDR(camera);
+    //apply 8-bit post and draw
     renderer.renderPostProcessLDR();
 
     stats.end();

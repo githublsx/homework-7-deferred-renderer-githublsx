@@ -3733,7 +3733,7 @@ var timer = {
     },
 };
 function loadOBJText() {
-    obj0 = Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('../resources/obj/wahoo.obj');
+    obj0 = Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('./src/resources/obj/wahoo.obj');
 }
 function loadScene() {
     square && square.destroy();
@@ -3742,7 +3742,7 @@ function loadScene() {
     square.create();
     mesh0 = new __WEBPACK_IMPORTED_MODULE_4__geometry_Mesh__["a" /* default */](obj0, __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["b" /* vec3 */].fromValues(0, 0, 0));
     mesh0.create();
-    tex0 = new __WEBPACK_IMPORTED_MODULE_9__rendering_gl_Texture__["a" /* default */]('../resources/textures/wahoo.bmp');
+    tex0 = new __WEBPACK_IMPORTED_MODULE_9__rendering_gl_Texture__["a" /* default */]('./src/resources/textures/wahoo.bmp');
 }
 function main() {
     // Initial display for framerate

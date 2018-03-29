@@ -87,21 +87,20 @@ I implement four of the effects.
 |![](img/original.jpg)|![](img/rain.jpg)|
 
 ## Extra credit
-* I use Dat.GUI to make some element(s) of the post-processes interactive.
+
+- I Implement an additional feature which is rain drops effect.
+- I use Dat.GUI to make some element(s) of the post-processes interactive.
+	- DOF: activate or deactivate the dof postprocess;
+	- Focus: change the focus length of dof postprocess;
+	- Bloom: activate or deactivate the bloom postprocess;
+	- Extract: change the value of the extracted color;
+	- Brightness: change the brightness of the bloom effect;
+	- Kuwahara: activate or deactivate the kuwahara postprocess;
+	- Radius: change the radius of kuwahara postprocess;
+	- Rain: activate or deactivate the rain drop postprocess;
+	- Stop: stop the time;
 
 ![](img/GUI.jpg)
-
-	* DOF: activate or deactivate the dof postprocess;
-	* Focus: change the focus length of dof postprocess;
-	* Bloom: activate or deactivate the bloom postprocess;
-	* Extract: change the value of the extracted color;
-	* Brightness: change the brightness of the bloom effect;
-	* Kuwahara: activate or deactivate the kuwahara postprocess;
-	* Radius: change the radius of kuwahara postprocess;
-	* Rain: activate or deactivate the rain drop postprocess;
-	* Stop: stop the time;
-
-* I Implement an additional feature which is rain drops effect.
 
 ## Resources
 

@@ -312,6 +312,7 @@ class OpenGLRenderer {
     gl.bindTexture(gl.TEXTURE_2D, this.gbTargets[0]);
     this.post32Passes[0].setHeight(window.innerHeight);
     this.post32Passes[0].setWidth(window.innerWidth);
+    this.post32Passes[0].setRadius(this.controls.Focus);
     this.post32Passes[0].draw();
 
     // bind default frame buffer
@@ -341,6 +342,7 @@ class OpenGLRenderer {
     }
     this.post32Passes[1].setHeight(window.innerHeight);
     this.post32Passes[1].setWidth(window.innerWidth);
+    this.post32Passes[1].setRadius(this.controls.Extract);
     this.post32Passes[1].draw();
 
     // bind default frame buffer
@@ -364,6 +366,8 @@ class OpenGLRenderer {
 
     this.post32Passes[2].setHeight(window.innerHeight);
     this.post32Passes[2].setWidth(window.innerWidth);
+    // this.post32Passes[2].setBlur(this.controls.BloommSize);
+    // this.post32Passes[2].setRadius(this.controls.Bloomsigma);
     this.post32Passes[2].draw();
 
     // bind default frame buffer
@@ -395,6 +399,7 @@ class OpenGLRenderer {
     gl.bindTexture(gl.TEXTURE_2D, this.post32Targets[1]);
     this.post32Passes[3].setHeight(window.innerHeight);
     this.post32Passes[3].setWidth(window.innerWidth);
+    this.post32Passes[3].setRadius(this.controls.Brightness);
     this.post32Passes[3].draw();
 
     // bind default frame buffer
@@ -510,7 +515,7 @@ class OpenGLRenderer {
 
       this.post8Passes[i].setHeight(window.innerHeight);
       this.post8Passes[i].setWidth(window.innerWidth);
-      this.post8Passes[i].setRadius(5.0);
+      this.post8Passes[i].setRadius(this.controls.Radius);
       this.post8Passes[i].draw();
 
       // bind default

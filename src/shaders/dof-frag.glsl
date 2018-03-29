@@ -10,6 +10,7 @@ uniform float u_Time;
 uniform float u_Radius;
 uniform float u_Width;
 uniform float u_Height;
+uniform float u_Blur;
 const float focus = 0.75;
 
 //https://www.shadertoy.com/view/XdfGDH
@@ -27,10 +28,10 @@ void main() {
     float kernel[mSize];
     vec3 blurcolor = vec3(0.0);
     float depth = 1.0 - texture(u_frame2, fs_UV).w;
-    float dist = abs(depth - focus);
+    float dist = abs(depth - u_Radius) / u_Radius;
     
     //create the 1-D kernel
-    float sigma = 10.0 * dist;
+    float sigma = 7.0 * dist;
     float Z = 0.0;
     for (int j = 0; j <= kSize; ++j)
     {

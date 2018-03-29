@@ -14,6 +14,6 @@ uniform float u_Height;
 void main() {
 	vec3 color = texture(u_frame, fs_UV).xyz;
     float brightness = dot(color, vec3(0.2126, 0.7152, 0.0722));
-    if(brightness > 0.6)
+    if(brightness > u_Radius)
     out_Col = vec4(color, 1.0);
 }

@@ -72,7 +72,7 @@ vec3 BackgroundCol()
 {
 	//https://www.shadertoy.com/view/4t23RR
 	// Setup:
-	vec2 UV = 1.5 * fs_UV + 0.1 * vec2(u_CamPos.x, u_CamPos.y - 9.0);
+	vec2 UV = 1.5 * fs_UV + 0.1 * vec2(-u_CamPos.x, -u_CamPos.y + 9.0);
 	UV.x *=  u_Width /u_Height;
 	
 	// Render:
@@ -147,7 +147,7 @@ void main() {
 	vec3 viewDir = normalize(vec3(0.0) - pos);
 	vec3 halfwayDir = normalize(lightDir + vec3(0.0) );
 	float spec = pow(max(dot(nor, halfwayDir), 0.0), 10.0);
-	float ambient = 0.08;
+	float ambient = 0.1;
 
 
     float depth = 1.0 - gb0.w;
@@ -159,7 +159,7 @@ void main() {
 	}
 	else
 	{
-		color = col * (lambert + ambient + spec * 5.0) + spec * 0.1 * CloudColor + ambient * 0.5 * BackColor;
+		color = col * (lambert + ambient + spec * 5.0) + spec * 0.1 * CloudColor + ambient * 0.75 * BackColor;
 	}
 
 	out_Col = vec4(color, 1.0);

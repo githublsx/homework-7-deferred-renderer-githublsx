@@ -7,6 +7,7 @@ out vec4 out_Col;
 uniform sampler2D u_frame;
 uniform float u_Time;
 uniform float u_Radius;
+uniform float u_Blur;
 uniform float u_Width;
 uniform float u_Height;
 

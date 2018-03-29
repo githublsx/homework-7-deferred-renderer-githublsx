@@ -43,6 +43,8 @@ class ShaderProgram {
   unifNear: WebGLUniformLocation;
   unifFar: WebGLUniformLocation;
 
+  unifBlur: WebGLUniformLocation;
+
   unifTexUnits: Map<string, WebGLUniformLocation>;
 
   constructor(shaders: Array<Shader>) {
@@ -70,6 +72,7 @@ class ShaderProgram {
     this.unifTime = gl.getUniformLocation(this.prog, "u_Time");
     this.unifCampos = gl.getUniformLocation(this.prog, "u_CamPos");
     this.unifRadius = gl.getUniformLocation(this.prog, "u_Radius");
+    this.unifBlur = gl.getUniformLocation(this.prog, "u_Blur");
     this.unifWidth = gl.getUniformLocation(this.prog, "u_Width");
     this.unifHeight = gl.getUniformLocation(this.prog, "u_Height");
     this.unifNear = gl.getUniformLocation(this.prog, "u_Near");
@@ -177,6 +180,13 @@ class ShaderProgram {
     this.use();
     if (this.unifRadius !== -1) {
       gl.uniform1f(this.unifRadius, t);
+    }
+  }
+
+  setBlur(t: number) {
+    this.use();
+    if (this.unifBlur !== -1) {
+      gl.uniform1f(this.unifBlur, t);
     }
   }
 

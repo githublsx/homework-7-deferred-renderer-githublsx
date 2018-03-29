@@ -14,9 +14,16 @@ import Texture from './rendering/gl/Texture';
 const controls = {
   // Extra credit: Add interactivity
   DOF: false,
+  Focus: 0.75,
   Bloom: false,
+  Extract: 0.6,
+  Brightness: 1.0,
+  // BloommSize: 11.0,
+  // Bloomsigma: 7.0,
   Kuwahara: false,
+  Radius: 5.0,
   Rain: false,
+  Stop: false,
 };
 
 let square: Square;
@@ -73,9 +80,14 @@ function main() {
   // Add controls to the gui
   const gui = new DAT.GUI();
   gui.add(controls, 'DOF');
+  gui.add(controls, 'Focus', 0.01, 1).step(0.01);
   gui.add(controls, 'Bloom');
+  gui.add(controls, 'Extract', 0, 1).step(0.01);
+  gui.add(controls, 'Brightness', 0, 2).step(0.01);
   gui.add(controls, 'Kuwahara');
+  gui.add(controls, 'Radius', 0, 10).step(1.0);
   gui.add(controls, 'Rain');
+  gui.add(controls, 'Stop');
 
   // get canvas and webgl context
   const canvas = <HTMLCanvasElement> document.getElementById('canvas');
@@ -109,7 +121,10 @@ function main() {
     camera.update();
     stats.begin();
     gl.viewport(0, 0, window.innerWidth, window.innerHeight);
-    timer.updateTime();
+    if(!controls.Stop)
+    {
+      timer.updateTime();
+    }
     renderer.updateTime(timer.deltaTime, timer.currentTime);
     renderer.controls = controls;
     

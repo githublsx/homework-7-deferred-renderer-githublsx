@@ -36,11 +36,11 @@ I pass the following scene data out from `standard-frag.glsl`:
 * World-space surface normal of the fragment.
 * Albedo (base color) of the fragment.
 
+I use the 32-bit `gbTexture` to store both your surface normal and depth value; set its RGB to the surface normal's XYZ and its W to the depth value.
+
 |depth|albedo|normal|
 |--------------|--------------|--------------|
 |![](img/depth.jpg)|![](img/albedo.jpg)|![](img/nor.jpg)|
-
-I use the 32-bit `gbTexture` to store both your surface normal and depth value; set its RGB to the surface normal's XYZ and its W to the depth value.
 
 ## Basic scene shading
 
@@ -70,24 +70,37 @@ I implement four of the effects.
 
 * __Approximated depth of field:__ I choose a "focal length" for the virtual camera and compare the camera-space Z coordinate of the fragments to that distance. The farther the Z coordinate is from that length, the stronger a blur effect I apply to that fragment. I used the Gaussian blur metioned above.
 
-|Original|Bloom|
+|Original|DOF|
 |--------------|--------------|
 |![](img/original.jpg)|![](img/dof.jpg)|
 
 * __Artistic effect:__ I Implement a oil painting shader with kuwahara filter from [here](https://www.shadertoy.com/view/lls3WM).
 
-|Original|kuwahara|
+|Original|Kuwahara|
 |--------------|--------------|
 |![](img/original.jpg)|![](img/kuwahara.jpg)|
 
 * __Rain effect:__:__ I Implement a rain drops effect shader modified from [here](https://www.shadertoy.com/view/MdfBRX). I also use a vignette effect shader so that the center of the screen won't be covered with rain drops.
 
-|Original|kuwahara|
+|Original|Rain|
 |--------------|--------------|
 |![](img/original.jpg)|![](img/rain.jpg)|
 
 ## Extra credit
 * I use Dat.GUI to make some element(s) of the post-processes interactive.
+
+![](img/GUI.jpg)
+
+* DOF: activate or deactivate the dof postprocess;
+* Focus: change the focus length of dof postprocess;
+* Bloom: activate or deactivate the bloom postprocess;
+* Extract: change the value of the extracted color;
+* Brightness: change the brightness of the bloom effect;
+* Kuwahara: activate or deactivate the kuwahara postprocess;
+* Radius: change the radius of kuwahara postprocess;
+* Rain: activate or deactivate the rain drop postprocess;
+* Stop: stop the time;
+
 * I Implement an additional feature which is rain drops effect.
 
 ## Resources
